@@ -1,16 +1,26 @@
 # 🦕 PixelDino
 
-Generate pixelated dinosaurs with random clothes!
+Generate cute pixel dinosaurs with random clothes!
+
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+
+## Demo
+
+Try it online: **[pixeldino-web.vercel.app](https://pixeldino-web.vercel.app)**
 
 ## Installation
 
 ```bash
 pip install pixeldino
-# or
+```
+
+Or with uv:
+```bash
 uv pip install pixeldino
 ```
 
-## Usage
+## Quick Start
 
 ### Command Line
 
@@ -19,18 +29,18 @@ uv pip install pixeldino
 pixeldino -o my_dino.png
 
 # Generate with specific accessories
-pixeldino -o fancy_dino.png --hat top_hat --glasses sunglasses
+pixeldino -o fancy_dino.png --hat crown --glasses sunglasses
 
 # Generate multiple dinos
 pixeldino -o dino.png -n 5
 
-# Generate an animated GIF
+# Generate an animated GIF with 8 random dinos
 pixeldino -o party.gif --gif
 
-# Larger output (32x scale = 512x512)
-pixeldino -o big_dino.png -s 32
+# Larger output (20x scale = 480x480)
+pixeldino -o big_dino.png -s 20
 
-# List all options
+# List all available options
 pixeldino --list-options
 ```
 
@@ -42,52 +52,100 @@ from pixeldino import generate_dino, DinoGenerator
 # Quick generation
 img = generate_dino("dino.png")
 
-# With options
+# With specific options
 img = generate_dino(
     "fancy_dino.png",
     hat="crown",
     glasses="sunglasses",
-    shirt="hoodie",
-    accessory="necklace",
-    scale=16
+    accessory="bowtie",
+    scale=12
 )
 
 # Using the generator class
-gen = DinoGenerator(scale=16)
+gen = DinoGenerator(scale=12)
 
 # Generate with random everything
 img = gen.generate()
+img.save("random_dino.png")
 
-# Generate with specific color
-img = gen.generate(dino_color=(255, 100, 100))
+# Generate with specific color palette
+pink_palette = {
+    "main": (219, 112, 219),
+    "light": (255, 182, 255),
+    "dark": (153, 50, 153)
+}
+img = gen.generate(dino_palette=pink_palette)
 
 # Generate a batch
 dinos = gen.generate_batch(10)
+for i, dino in enumerate(dinos):
+    dino.save(f"dino_{i}.png")
 
-# See all options
+# See all available options
 print(gen.get_options())
 ```
 
-## Available Options
+## Customization Options
 
 ### Hats
-- `none`, `top_hat`, `cap`, `crown`, `beanie`, `party_hat`
+- `none` - No hat
+- `party_hat` - Colorful party cone
+- `top_hat` - Fancy top hat
+- `crown` - Royal crown
+- `beanie` - Cozy beanie with pom-pom
+- `cap` - Baseball cap
 
 ### Glasses
-- `none`, `sunglasses`, `monocle`, `nerd_glasses`
-
-### Shirts
-- `none`, `tshirt`, `vest`, `hoodie`
+- `none` - No glasses
+- `sunglasses` - Cool shades
+- `round_glasses` - Nerdy round specs
 
 ### Accessories
-- `none`, `bowtie`, `necklace`, `scarf`
+- `none` - No accessory
+- `bowtie` - Dapper bowtie
+- `scarf` - Warm scarf
 
-## Dino Colors
+### Colors
 
-10 built-in colors: green, light green, orange, yellow, purple, pink, blue, cyan, red, brown.
+8 built-in color palettes with 3-tone shading:
+- Pink, Green, Orange, Blue, Purple, Cyan, Red, Yellow
 
-Or pass any RGB tuple!
+Or pass your own palette:
+```python
+my_palette = {
+    "main": (R, G, B),
+    "light": (R, G, B),  # Highlights
+    "dark": (R, G, B)    # Shadows
+}
+```
+
+## Web App
+
+A web version is available at [pixeldino-web.vercel.app](https://pixeldino-web.vercel.app)
+
+Features:
+- 🎲 Randomize button
+- 💾 Download as PNG
+- Interactive dropdowns for all options
+
+## Development
+
+```bash
+# Clone the repo
+git clone https://github.com/avareed-assistant/pixeldino.git
+cd pixeldino
+
+# Install with uv
+uv pip install -e .
+
+# Run tests
+uv run pytest
+```
 
 ## License
 
-MIT
+MIT License - feel free to use in your projects!
+
+## Credits
+
+Made with 💜 by [Ava](https://github.com/avareed-assistant)
